@@ -1,101 +1,146 @@
-import Image from "next/image";
+"use client";
+
+import {
+  Search,
+  Sparkles,
+  Globe,
+  Heart,
+  Monitor,
+  GraduationCap,
+  Wallet,
+  Bitcoin,
+  Film,
+  Gamepad,
+  Eye,
+} from "lucide-react";
+// import ConnectButton from "@/components/connect-button";
+import { Button } from "@/components/button";
+import Input from "@/components/input";
+import Card from "@/components/card";
+
+const categories = [
+  { icon: <Sparkles className="w-4 h-4" />, label: "Featured" },
+  { icon: <Globe className="w-4 h-4" />, label: "Web3" },
+  { icon: <Heart className="w-4 h-4" />, label: "Healthcare" },
+  { icon: <Monitor className="w-4 h-4" />, label: "Software" },
+  { icon: <GraduationCap className="w-4 h-4" />, label: "Education" },
+  { icon: <Wallet className="w-4 h-4" />, label: "Finance" },
+  { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+  { icon: <Film className="w-4 h-4" />, label: "Media" },
+  { icon: <Gamepad className="w-4 h-4" />, label: "Fun" },
+];
+
+const featuredModels = [
+  {
+    id: 1,
+    name: "Jupiter Assistant",
+    description:
+      "Jupiter Assistant is a SLM that helps users develop their solutions using Jupiter, one of the largest decentralized trading platform.",
+    avatar:
+      "https://images.unsplash.com/photo-1628126235206-5260b9ea6441?w=800&auto=format&fit=crop&q=60",
+    author: "FearlessHawk29834",
+    views: "111.6k",
+  },
+  {
+    id: 2,
+    name: "Particle Network Assistant",
+    description:
+      "Particle Network Assistant is an advanced SLM that offers expert guidance for developing solutions using the Particle Network platform.",
+    avatar:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60",
+    author: "FierceBear41225",
+    views: "69.8k",
+  },
+  {
+    id: 3,
+    name: "GameMaker",
+    description: "SLM oriented on code assistance for GameMaker",
+    avatar:
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60",
+    author: "CrawfishFrigid54919",
+    views: "60k",
+  },
+  {
+    id: 4,
+    name: "OG Assistant",
+    description:
+      "OG Assistant is SLM that provides guidance for developing solutions using The First Decentralized AI Operating System.",
+    avatar:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop&q=60",
+    author: "SharkBold64290",
+    views: "56.8k",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="max-w-7xl mx-auto px-4 flex flex-col gap-6">
+      {/* <div className="flex justify-end mb-6">
+          <ConnectButton />
+        </div> */}
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <div className="flex flex-col w-full gap-6">
+        <div className="relative w-full max-w-2xl mx-auto">
+          <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+          <Input
+            placeholder="Search Small Language Models"
+            className="pl-10 h-12"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className="flex flex-wrap justify-center gap-2">
+          {categories.map((category, index) => (
+            <Button
+              key={index}
+              variant={index === 0 ? "default" : "outline"}
+              className="flex items-center gap-2"
+            >
+              {category.icon}
+              {category.label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-2xl font-semibold flex items-center gap-2">
+          <Sparkles className="h-5 w-5" />
+          Featured
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {featuredModels.map((model) => (
+            <Card
+              key={model.id}
+              className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+            >
+              <div className="flex gap-4">
+                <div className="w-12 h-12 rounded-full overflow-hidden">
+                  <img
+                    src={model.avatar}
+                    alt={model.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-lg mb-1">{model.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    {model.description}
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <span className="flex items-center gap-1">
+                      By {model.author}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Eye className="w-4 h-4" /> {model.views}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
