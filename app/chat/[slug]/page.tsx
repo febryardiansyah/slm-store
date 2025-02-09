@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowLeftCircle,
   SendHorizonal,
   MessageCircleQuestion,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Input from "@/components/input";
 import clsx from "clsx";
 import openRouterService, {
@@ -14,9 +14,15 @@ import openRouterService, {
   TCompletionResponse,
 } from "@/services/openRouter.service";
 import Markdown from "react-markdown";
+import { modelData, TModel } from "@/app/data";
+import Image from "next/image";
+import { HashLoader } from "react-spinners";
 
 export default function ChatPage() {
   const router = useRouter();
+  const { slug } = useParams();
+
+  const [model, setModel] = useState<TModel>();
 
   const [messages, setMessages] = useState<MessagePayload[]>([]);
   const [payload, setPayload] = useState<MessagePayload[]>([]);
@@ -46,7 +52,15 @@ export default function ChatPage() {
           )}
         >
           {isUser ? chatComp() : null}
-          <div className="min-w-10 min-h-10 rounded-full bg-gray-300" />
+          <div className="min-w-10 min-h-10 rounded-full bg-gray-300">
+            <Image
+              src={isUser ? "https://i.pravatar.cc/40" : model?.avatar || ""}
+              alt="User Avatar"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </div>
           {isUser ? null : chatComp()}
         </div>
       </div>
@@ -95,6 +109,16 @@ export default function ChatPage() {
     }
   };
 
+  useEffect(() => {
+    if (slug) {
+      const model = modelData.find((model) => model.id === slug);
+      if (model) {
+        setModel(model);
+        setPayload([{ role: "user", content: model.instruction }]);
+      }
+    }
+  }, [slug]);
+
   return (
     <div className="flex flex-col gap-6 relative">
       {/* header */}
@@ -108,15 +132,23 @@ export default function ChatPage() {
           />
 
           <div className="flex flex-row gap-2 items-center">
-            <div className="w-10 h-10 rounded-full bg-gray-300"></div>
-            <div>Jupiter Assistance</div>
+            <div className="w-10 h-10 rounded-full bg-gray-50">
+              <Image
+                src={model?.avatar || ""}
+                alt={model?.name || ""}
+                width={40}
+                height={40}
+                className="rounded-full object-cover w-full h-full"
+              />
+            </div>
+            <div>{model?.name}</div>
           </div>
         </div>
       </div>
 
       {/* chat */}
-      <div className="max-w-7xl mx-auto w-full px-4">
-        <div className="flex flex-col gap-3 w-full mb-16">
+      <div className="max-w-7xl mx-auto w-full px-4 mb-28">
+        <div className="flex flex-col gap-3 w-full">
           {messages.map((message, key) => {
             return (
               <ChatCard
@@ -129,7 +161,7 @@ export default function ChatPage() {
         </div>
         {loading && (
           <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+            <HashLoader />
           </div>
         )}
       </div>
@@ -147,7 +179,7 @@ export default function ChatPage() {
             <MessageCircleQuestion className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
             <Input
               placeholder="Type a message"
-              className="h-12 px-10"
+              className="h-12 !px-10"
               onChange={(e) => {
                 e.preventDefault();
                 setInput(e.target.value);

@@ -1,0 +1,99 @@
+import React from "react";
+import {
+  Bitcoin,
+  Film,
+  Globe,
+  GraduationCap,
+  Heart,
+  Monitor,
+  Sparkles,
+  Wallet,
+  Gamepad,
+} from "lucide-react";
+
+export type TModel = {
+  id: string;
+  name: string;
+  description: string;
+  avatar: string;
+  instruction: string;
+  author: string;
+  views: number;
+  greeting?: string;
+  category?: TCategory;
+};
+
+const modelData: TModel[] = [
+  {
+    id: "1",
+    name: "Bitcoin Pro",
+    description: "A decentralized digital currency",
+    avatar: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+    instruction:
+      "Your name is Bitcoin Pro, You Only answer questions about Bitcoin. Bitcoin Pro is your go-to assistant for everything related to Bitcoin and cryptocurrency trading. Whether you are a beginner looking to understand the basics or an expert tracking the latest market trends, Bitcoin Pro is here to help",
+    author: "Satoshi Nakamoto",
+    views: 1000,
+    greeting:
+      "Hello, I'm Bitcoin Pro, your go-to assistant for everything related to Bitcoin and cryptocurrency trading. How can I help you today?",
+    category: { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+  },
+  {
+    id: "2",
+    name: "Javascript Instructor",
+    description: "An expert in JavaScript programming",
+    avatar:
+      "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
+    instruction:
+      "Your name is Javascript Instructor, You Only answer questions about JavaScript. Javascript Instructor is your go-to assistant for everything related to JavaScript programming. Whether you are a beginner looking to understand the basics or an expert looking to solve complex problems, Javascript Instructor is here to help",
+    author: "Brendan Eich",
+    views: 500,
+    greeting:
+      "Hello, I'm Javascript Instructor, your go-to assistant for everything related to JavaScript programming. How can I help you today?",
+    category: { icon: <Monitor className="w-4 h-4" />, label: "Software" },
+  },
+  {
+    id: "3",
+    name: "CNN",
+    description: "A major news network",
+    avatar: "https://upload.wikimedia.org/wikipedia/commons/b/b1/CNN.svg",
+    instruction:
+      "Your name is CNN, You Only answer questions about news. CNN is your go-to assistant for everything related to news and current events. Whether you are looking for the latest headlines or in-depth analysis, CNN is here to help",
+    author: "Ted Turner",
+    views: 2000,
+    greeting:
+      "Hello, I'm CNN, your go-to assistant for everything related to news and current events. How can I help you today?",
+    category: { icon: <Film className="w-4 h-4" />, label: "Media" },
+  },
+  {
+    id: "4",
+    name: "Ethereum Foundation",
+    description: "A decentralized platform for applications",
+    avatar: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+    instruction:
+      "Your name is Ethereum Foundation, You Only answer questions about Ethereum. Ethereum Foundation is your go-to assistant for everything related to Ethereum and decentralized applications. Whether you are a developer looking to build on the Ethereum platform or an investor looking to understand the latest trends, Ethereum Foundation is here to help",
+    author: "Vitalik Buterin",
+    views: 1500,
+    greeting:
+      "Hello, I'm Ethereum Foundation, your go-to assistant for everything related to Ethereum and decentralized applications. How can I help you today?",
+    category: { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+  },
+];
+
+export type TCategory = {
+  icon: React.ReactNode;
+  label: string;
+};
+
+const categories: TCategory[] = [
+  { icon: <Sparkles className="w-4 h-4" />, label: "Featured" },
+  { icon: <Globe className="w-4 h-4" />, label: "Web3" },
+  { icon: <Heart className="w-4 h-4" />, label: "Healthcare" },
+  { icon: <Monitor className="w-4 h-4" />, label: "Software" },
+  { icon: <GraduationCap className="w-4 h-4" />, label: "Education" },
+  { icon: <Wallet className="w-4 h-4" />, label: "Finance" },
+  { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+  { icon: <Film className="w-4 h-4" />, label: "Media" },
+  { icon: <Gamepad className="w-4 h-4" />, label: "Fun" },
+];
+
+export { modelData, categories };
