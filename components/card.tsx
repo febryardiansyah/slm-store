@@ -4,9 +4,11 @@ import React from "react";
 export default function Card({
   className,
   children: child,
+  onClick,
 }: {
   className?: string;
   children: React.ReactNode;
+  onClick?: () => void;
 }) {
   return (
     <div
@@ -14,6 +16,7 @@ export default function Card({
         "rounded-lg border bg-card text-card-foreground shadow-sm",
         className
       )}
+      onClick={onClick}
     >
       {child}
     </div>

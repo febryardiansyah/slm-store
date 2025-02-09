@@ -17,6 +17,8 @@ import {
 import { Button } from "@/components/button";
 import Input from "@/components/input";
 import Card from "@/components/card";
+import { useRouter } from "next/navigation";
+import Header from "@/components/header";
 
 const categories = [
   { icon: <Sparkles className="w-4 h-4" />, label: "Featured" },
@@ -73,13 +75,17 @@ const featuredModels = [
 ];
 
 export default function Home() {
+  const router = useRouter();
+
   return (
-    <main className="max-w-7xl mx-auto px-4 flex flex-col gap-6">
+    <main className="flex flex-col gap-6 max-w-7xl mx-auto px-4 ">
       {/* <div className="flex justify-end mb-6">
           <ConnectButton />
         </div> */}
 
       <div className="flex flex-col w-full gap-6">
+        <Header />
+
         <div className="relative w-full max-w-2xl mx-auto">
           <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
           <Input
@@ -113,6 +119,9 @@ export default function Home() {
             <Card
               key={model.id}
               className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => {
+                router.push("/chat/1");
+              }}
             >
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
