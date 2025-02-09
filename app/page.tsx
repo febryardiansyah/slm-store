@@ -19,6 +19,7 @@ import Input from "@/components/input";
 import Card from "@/components/card";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header";
+import Image from "next/image";
 
 const categories = [
   { icon: <Sparkles className="w-4 h-4" />, label: "Featured" },
@@ -125,10 +126,12 @@ export default function Home() {
             >
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                  <img
+                  <Image
                     src={model.avatar}
                     alt={model.name}
                     className="w-full h-full object-cover"
+                    width={48}
+                    height={48}
                   />
                 </div>
                 <div className="flex-1">
