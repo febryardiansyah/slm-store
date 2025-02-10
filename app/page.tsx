@@ -9,9 +9,15 @@ import Header from "@/components/header";
 import Image from "next/image";
 import { categories, modelData } from "./data";
 import { Eye, Search, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
 
 export default function Home() {
   const router = useRouter();
+
+  const [selectedCategory, setSelectedCategory] = useState<string>("1");
+
+  useEffect(() => {}, [selectedCategory]);
 
   return (
     <main className="flex flex-col gap-6 max-w-7xl mx-auto px-4 ">
@@ -34,8 +40,9 @@ export default function Home() {
           {categories.map((category, index) => (
             <Button
               key={index}
-              variant={index === 0 ? "default" : "outline"}
-              className="flex items-center gap-2"
+              variant={selectedCategory === category.id ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category.id)}
+              className={clsx("flex items-center gap-2")}
             >
               {category.icon}
               {category.label}
@@ -51,47 +58,51 @@ export default function Home() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {modelData.map((model) => (
-            <Card
-              key={model.id}
-              className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => {
-                router.push(`/chat/${model.id}`);
-              }}
-            >
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden">
-                  <Image
-                    src={model.avatar}
-                    alt={model.name}
-                    className="w-full h-full object-cover"
-                    width={48}
-                    height={48}
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-1">{model.name}</h3>
-
-                  <div className="flex w-fit items-center gap-2 text-xs text-gray-500 mb-2 bg-gray-50 rounded-md px-2 py-1 border border-gray-200">
-                    {model?.category?.icon}
-                    <span>{model?.category?.label}</span>
+          {modelData
+            .filter((e) =>
+              selectedCategory === "1" ? e : e.category?.id === selectedCategory
+            )
+            .map((model) => (
+              <Card
+                key={model.id}
+                className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => {
+                  router.push(`/chat/${model.id}`);
+                }}
+              >
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-full overflow-hidden">
+                    <Image
+                      src={model.avatar}
+                      alt={model.name}
+                      className="w-full h-full object-cover"
+                      width={48}
+                      height={48}
+                    />
                   </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-lg mb-1">{model.name}</h3>
 
-                  <p className="text-gray-600 text-sm mb-3">
-                    {model.description}
-                  </p>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
-                      By {model.author}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Eye className="w-4 h-4" /> {model.views}
-                    </span>
+                    <div className="flex w-fit items-center gap-2 text-xs text-gray-500 mb-2 bg-gray-50 rounded-md px-2 py-1 border border-gray-200">
+                      {model?.category?.icon}
+                      <span>{model?.category?.label}</span>
+                    </div>
+
+                    <p className="text-gray-600 text-sm mb-3">
+                      {model.description}
+                    </p>
+                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                      <span className="flex items-center gap-1">
+                        By {model.author}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="w-4 h-4" /> {model.views}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            ))}
         </div>
       </section>
     </main>

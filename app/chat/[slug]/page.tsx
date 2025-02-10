@@ -12,7 +12,7 @@ import clsx from "clsx";
 import openRouterService, {
   MessagePayload,
   TCompletionResponse,
-} from "@/services/openRouter.service";
+} from "@/services/chat.service";
 import Markdown from "react-markdown";
 import { modelData, TModel } from "@/app/data";
 import Image from "next/image";
@@ -160,7 +160,7 @@ export default function ChatPage() {
           })}
         </div>
         {loading && (
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <HashLoader />
           </div>
         )}

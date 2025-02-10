@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = process.env.NEXT_PUBLIC_OPEN_ROUTER_TOKEN;
+const token = process.env.NEXT_PUBLIC_SENTINENT_TOKEN;
 
 const http = axios;
 

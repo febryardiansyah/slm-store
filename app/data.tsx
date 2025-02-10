@@ -11,6 +11,24 @@ import {
   Gamepad,
 } from "lucide-react";
 
+export type TCategory = {
+  id: string;
+  icon: React.ReactNode;
+  label: string;
+};
+
+const categories: TCategory[] = [
+  { id: "1", icon: <Sparkles className="w-4 h-4" />, label: "Featured" },
+  { id: "2", icon: <Globe className="w-4 h-4" />, label: "Web3" },
+  { id: "3", icon: <Heart className="w-4 h-4" />, label: "Healthcare" },
+  { id: "4", icon: <Monitor className="w-4 h-4" />, label: "Software" },
+  { id: "5", icon: <GraduationCap className="w-4 h-4" />, label: "Education" },
+  { id: "6", icon: <Wallet className="w-4 h-4" />, label: "Finance" },
+  { id: "7", icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+  { id: "8", icon: <Film className="w-4 h-4" />, label: "Media" },
+  { id: "9", icon: <Gamepad className="w-4 h-4" />, label: "Fun" },
+];
+
 export type TModel = {
   id: string;
   name: string;
@@ -35,7 +53,7 @@ const modelData: TModel[] = [
     views: 1000,
     greeting:
       "Hello, I'm Bitcoin Pro, your go-to assistant for everything related to Bitcoin and cryptocurrency trading. How can I help you today?",
-    category: { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+    category: categories[6],
   },
   {
     id: "2",
@@ -49,7 +67,7 @@ const modelData: TModel[] = [
     views: 500,
     greeting:
       "Hello, I'm Javascript Instructor, your go-to assistant for everything related to JavaScript programming. How can I help you today?",
-    category: { icon: <Monitor className="w-4 h-4" />, label: "Software" },
+    category: categories[3],
   },
   {
     id: "3",
@@ -62,7 +80,7 @@ const modelData: TModel[] = [
     views: 2000,
     greeting:
       "Hello, I'm CNN, your go-to assistant for everything related to news and current events. How can I help you today?",
-    category: { icon: <Film className="w-4 h-4" />, label: "Media" },
+    category: categories[7],
   },
   {
     id: "4",
@@ -75,25 +93,8 @@ const modelData: TModel[] = [
     views: 1500,
     greeting:
       "Hello, I'm Ethereum Foundation, your go-to assistant for everything related to Ethereum and decentralized applications. How can I help you today?",
-    category: { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
+    category: categories[6],
   },
-];
-
-export type TCategory = {
-  icon: React.ReactNode;
-  label: string;
-};
-
-const categories: TCategory[] = [
-  { icon: <Sparkles className="w-4 h-4" />, label: "Featured" },
-  { icon: <Globe className="w-4 h-4" />, label: "Web3" },
-  { icon: <Heart className="w-4 h-4" />, label: "Healthcare" },
-  { icon: <Monitor className="w-4 h-4" />, label: "Software" },
-  { icon: <GraduationCap className="w-4 h-4" />, label: "Education" },
-  { icon: <Wallet className="w-4 h-4" />, label: "Finance" },
-  { icon: <Bitcoin className="w-4 h-4" />, label: "Crypto" },
-  { icon: <Film className="w-4 h-4" />, label: "Media" },
-  { icon: <Gamepad className="w-4 h-4" />, label: "Fun" },
 ];
 
 export { modelData, categories };

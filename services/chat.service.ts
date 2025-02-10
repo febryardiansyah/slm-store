@@ -34,15 +34,20 @@ type ErrorResponse = {
   metadata?: Record<string, unknown>;
 };
 
-const openRouterService = {
+const chatService = {
   completions: (messages: MessagePayload[]) => {
-    return http.post("https://openrouter.ai/api/v1/chat/completions", {
-      model: "google/gemini-2.0-flash-001",
-      messages: messages.map((message) => {
-        return { role: message.role, content: message.content };
-      }),
+    return http.post("https://api.fireworks.ai/inference/v1/chat/completions", {
+      model:
+        "accounts/sentientfoundation/models/dobby-mini-leashed-llama-3-1-8b",
+      max_tokens: 16384,
+      top_p: 1,
+      top_k: 40,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      temperature: 0.6,
+      messages: messages,
     });
   },
 };
 
-export default openRouterService;
+export default chatService;
