@@ -4,7 +4,7 @@
 import { Button } from "@/components/button";
 import Input from "@/components/input";
 import Card from "@/components/card";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/header";
 import Image from "next/image";
 import { categories, modelData } from "./data";
@@ -14,10 +14,37 @@ import clsx from "clsx";
 
 export default function Home() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [selectedCategory, setSelectedCategory] = useState<string>("1");
+  const [list, setList] = useState(modelData);
 
-  useEffect(() => {}, [selectedCategory]);
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setList(
+      modelData.filter(
+        (model) =>
+          model.name.toLowerCase().includes(e.target.value.toLowerCase()) &&
+          model.category?.id === selectedCategory
+      )
+    );
+  };
+
+  useEffect(() => {
+    const category = searchParams.get("category");
+
+    if (category) {
+      setSelectedCategory(category);
+      setList(
+        modelData.filter(
+          (model) => model.category?.id === category || category === "1"
+        )
+      );
+      if (category === "1") {
+        router.push("/");
+      }
+    }
+  }, [searchParams.get("category")]);
 
   return (
     <main className="flex flex-col gap-6 max-w-7xl mx-auto px-4 ">
@@ -28,20 +55,24 @@ export default function Home() {
       <div className="flex flex-col w-full gap-6">
         <Header />
 
-        <div className="relative w-full max-w-2xl mx-auto">
+        <form className="relative w-full max-w-2xl mx-auto">
           <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
           <Input
             placeholder="Search Small Language Models"
             className="pl-10 h-12"
+            onChange={handleSearch}
           />
-        </div>
+        </form>
 
         <div className="flex flex-wrap justify-center gap-2">
           {categories.map((category, index) => (
             <Button
               key={index}
               variant={selectedCategory === category.id ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category.id)}
+              onClick={() => {
+                setSelectedCategory(category.id);
+                router.push(`/?category=${category.id}`);
+              }}
               className={clsx("flex items-center gap-2")}
             >
               {category.icon}
@@ -57,12 +88,9 @@ export default function Home() {
           Featured
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {modelData
-            .filter((e) =>
-              selectedCategory === "1" ? e : e.category?.id === selectedCategory
-            )
-            .map((model) => (
+        {list.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {list.map((model) => (
               <Card
                 key={model.id}
                 className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
@@ -103,7 +131,14 @@ export default function Home() {
                 </div>
               </Card>
             ))}
-        </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center w-full">
+            <p className="text-gray-500">
+              No models found. Please try a different search.
+            </p>
+          </div>
+        )}
       </section>
     </main>
   );
