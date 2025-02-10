@@ -29,7 +29,7 @@ const categories: TCategory[] = [
   { id: "9", icon: <Gamepad className="w-4 h-4" />, label: "Fun" },
 ];
 
-export type TModel = {
+export type TAssistant = {
   id: string;
   name: string;
   description: string;
@@ -41,7 +41,7 @@ export type TModel = {
   category?: TCategory;
 };
 
-const modelData: TModel[] = [
+const assistantList: TAssistant[] = [
   {
     id: "1",
     name: "Bitcoin Pro",
@@ -97,4 +97,26 @@ const modelData: TModel[] = [
   },
 ];
 
-export { modelData, categories };
+export type TModel = {
+  apiUrl: string;
+  name: string;
+  model: string;
+  type: "sentinent" | "openRouter";
+};
+
+const modelList: TModel[] = [
+  {
+    name: "dobby-mini-leashed-llama-3-1-8b",
+    model: "accounts/sentientfoundation/models/dobby-mini-leashed-llama-3-1-8b",
+    apiUrl: "https://api.fireworks.ai/inference/v1/chat/completions",
+    type: "sentinent",
+  },
+  {
+    name: 'gemini-2.0-flash-001',
+    model: 'google/gemini-2.0-flash-001',
+    apiUrl: 'https://openrouter.ai/api/v1/chat/completions',
+    type: 'openRouter',
+  }
+];
+
+export { assistantList, categories, modelList };

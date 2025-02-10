@@ -1,4 +1,5 @@
-import http from "./http";
+import { TModel } from "@/app/data";
+import http, { apiToken } from "./http";
 
 export type MessagePayload = {
   role: string;
@@ -35,18 +36,19 @@ type ErrorResponse = {
 };
 
 const chatService = {
-  completions: (messages: MessagePayload[]) => {
-    return http.post("https://api.fireworks.ai/inference/v1/chat/completions", {
-      model:
-        "accounts/sentientfoundation/models/dobby-mini-leashed-llama-3-1-8b",
-      max_tokens: 16384,
-      top_p: 1,
-      top_k: 40,
-      presence_penalty: 0,
-      frequency_penalty: 0,
-      temperature: 0.6,
-      messages: messages,
-    });
+  completions: (messages: MessagePayload[], model: TModel) => {
+    return http.post(
+      model.apiUrl,
+      {
+        model: model.model,
+        messages: messages,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken(model.type)}`,
+        },
+      }
+    );
   },
 };
 
