@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ArrowLeftCircle,
   SendHorizonal,
@@ -23,6 +23,7 @@ export default function ChatPage() {
   const { slug } = useParams();
 
   const [model, setModel] = useState<TModel>();
+  const endref = useRef<HTMLDivElement | null>(null);
 
   const [messages, setMessages] = useState<MessagePayload[]>([]);
   const [payload, setPayload] = useState<MessagePayload[]>([]);
@@ -52,19 +53,23 @@ export default function ChatPage() {
           )}
         >
           {isUser ? chatComp() : null}
-          <div className="min-w-10 min-h-10 rounded-full bg-gray-300">
+          <div className="w-10 h-10 rounded-full bg-gray-300">
             <Image
               src={isUser ? "https://i.pravatar.cc/40" : model?.avatar || ""}
               alt="User Avatar"
               width={40}
               height={40}
-              className="rounded-full"
+              className="rounded-full object-cover w-full h-full"
             />
           </div>
           {isUser ? null : chatComp()}
         </div>
       </div>
     );
+  };
+
+  const scrollToBottom = () => {
+    endref.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const sendMessage = async () => {
@@ -86,6 +91,7 @@ export default function ChatPage() {
         setMessages((prev) => [...prev, data]);
         setPayload((prev) => [...prev, data]);
       }
+      scrollToBottom();
     } catch (error: any) {
       console.log("error", error);
 
@@ -103,6 +109,7 @@ export default function ChatPage() {
   };
 
   const handleSubmit = () => {
+    scrollToBottom();
     if (input) {
       payload.push({ role: "user", content: input });
       sendMessage();
@@ -164,6 +171,8 @@ export default function ChatPage() {
             <HashLoader />
           </div>
         )}
+
+        <div ref={endref}/>
       </div>
 
       {/* input */}
