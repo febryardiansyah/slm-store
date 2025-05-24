@@ -48,7 +48,7 @@ export default function MainModule() {
     }, [searchParams.get("category")]);
   
     return (
-      <main className="flex flex-col gap-6 max-w-7xl mx-auto px-4 ">
+      <main className="flex flex-col gap-6 max-w-7xl mx-auto px-4 pb-5">
         {/* <div className="flex justify-end mb-6">
             <ConnectButton />
           </div> */}

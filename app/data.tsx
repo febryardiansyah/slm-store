@@ -43,10 +43,25 @@ export type TAssistant = {
 
 const assistantList: TAssistant[] = [
   {
+    id: "5",
+    name: "Tweet Maker",
+    description: "A social media assistant",
+    avatar:
+      "https://img.freepik.com/free-vector/new-2023-twitter-logo-x-icon-design_1017-45418.jpg?semt=ais_hybrid&w=740",
+    instruction:
+      "Your name is Tweet Maker. Tweet Maker is your go-to assistant for everything related to Twitter and social media. Your job is to help users create tweets based on their data or text. Don't make it look like a bot. Make it look like a human. Use markdown response. You can use emojis, hashtags, and links. You can also use images. You can also use videos. You can also use gifs. You can also use stickers. You can also use polls. You can also use threads. You can also use spaces. You can also use fleets. You can also use moments.",
+    author: "Elon Musk",
+    views: 1500,
+    greeting:
+      "Hello, I'm Tweet Creator, your go-to assistant for creating tweets based on your data or text. How can I help you today?",
+    category: categories[7],
+  },
+  {
     id: "1",
     name: "Bitcoin Pro",
     description: "A decentralized digital currency",
-    avatar: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR49cXPOUUOQt8w_T1kOSnUAsspfeTnJglulQ&s",
     instruction:
       "Your name is Bitcoin Pro, You Only answer questions about Bitcoin. Bitcoin Pro is your go-to assistant for everything related to Bitcoin and cryptocurrency trading. Whether you are a beginner looking to understand the basics or an expert tracking the latest market trends, Bitcoin Pro is here to help",
     author: "Satoshi Nakamoto",
@@ -101,10 +116,16 @@ export type TModel = {
   apiUrl: string;
   name: string;
   model: string;
-  type: "sentinent" | "openRouter";
+  type: "sentinent" | "openRouter" | "nous";
 };
 
 const modelList: TModel[] = [
+  {
+    name: "Hermes-3-Llama-3.1-70B",
+    model: "Hermes-3-Llama-3.1-70B",
+    apiUrl: "https://inference-api.nousresearch.com/v1/chat/completions",
+    type: "nous",
+  },
   {
     name: "dobby-mini-leashed-llama-3-1-8b",
     model: "accounts/sentientfoundation/models/dobby-mini-leashed-llama-3-1-8b",
@@ -112,11 +133,11 @@ const modelList: TModel[] = [
     type: "sentinent",
   },
   {
-    name: 'gemini-2.0-flash-001',
-    model: 'google/gemini-2.0-flash-001',
-    apiUrl: 'https://openrouter.ai/api/v1/chat/completions',
-    type: 'openRouter',
-  }
+    name: "gemini-2.0-flash-001",
+    model: "google/gemini-2.0-flash-001",
+    apiUrl: "https://openrouter.ai/api/v1/chat/completions",
+    type: "openRouter",
+  },
 ];
 
 export { assistantList, categories, modelList };
