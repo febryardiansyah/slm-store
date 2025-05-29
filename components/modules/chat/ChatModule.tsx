@@ -1,6 +1,5 @@
 import { assistantList, modelList, TAssistant } from "@/app/data";
 import { Button } from "@/components/global/button";
-import Input from "@/components/global/input";
 import chatService, {
   MessagePayload,
   TCompletionResponse,
@@ -22,7 +21,7 @@ export default function ChatModule() {
   const router = useRouter();
   const { slug } = useParams();
 
-  const [model, setModel] = useState<TAssistant>();
+  const [assistant, setAssistant] = useState<TAssistant>();
   const endref = useRef<HTMLDivElement | null>(null);
   const [selectedModel, setSelectedModel] = useState<string>(modelList[0].name);
 
@@ -66,7 +65,9 @@ export default function ChatModule() {
           {isUser ? chatComp() : null}
           <div className="w-10 h-10 rounded-full bg-gray-300">
             <Image
-              src={isUser ? "https://i.pravatar.cc/40" : model?.avatar || ""}
+              src={
+                isUser ? "https://i.pravatar.cc/40" : assistant?.avatar || ""
+              }
               alt="User Avatar"
               width={40}
               height={40}
@@ -138,8 +139,22 @@ export default function ChatModule() {
     if (slug) {
       const model = assistantList.find((model) => model.id === slug);
       if (model) {
-        setModel(model);
+        setAssistant(model);
         setPayload([{ role: "user", content: model.instruction }]);
+      } else {
+        const randomAssistant: TAssistant = {
+          id: `${slug}`,
+          name: `${slug}`,
+          author: "",
+          description: "",
+          instruction: "",
+          views: 0,
+          greeting: "",
+          avatar:
+            "https://png.pngtree.com/png-vector/20220707/ourmid/pngtree-chatbot-robot-concept-chat-bot-png-image_5632381.png",
+        };
+        setAssistant(randomAssistant);
+        setPayload([{ role: "user", content: randomAssistant.instruction }]);
       }
     }
   };
@@ -159,17 +174,17 @@ export default function ChatModule() {
           <div className="flex flex-row gap-2 items-center">
             <div className="w-10 h-10 rounded-full bg-gray-50">
               <Image
-                src={model?.avatar || ""}
-                alt={model?.name || ""}
+                src={assistant?.avatar || ""}
+                alt={assistant?.name || ""}
                 width={40}
                 height={40}
                 className="rounded-full object-cover w-full h-full"
               />
             </div>
-            <div className="font-medium">{model?.name}</div>
+            <div className="font-medium">{assistant?.name}</div>
           </div>
 
-          <div className="flex flex-row gap-2 items-center">
+          <div className="flex flex-col-reverse md:flex-row gap-2 items-center">
             <Button
               onClick={() => {
                 setMessages([]);
@@ -185,7 +200,11 @@ export default function ChatModule() {
               onChange={(e) => setSelectedModel(e.target.value)}
             >
               {modelList.map((model, index) => (
-                <option key={index} value={model.name}>
+                <option
+                  key={index}
+                  value={model.name}
+                  disabled={!model.enabled}
+                >
                   {model.name}
                 </option>
               ))}
@@ -219,8 +238,8 @@ export default function ChatModule() {
           </>
         ) : (
           <div className="flex flex-col justify-center items-center h-96 text-gray-500">
-            <span>Start a conversation with {model?.name}</span>
-            <span className="font-bold">{model?.greeting}</span>
+            <span>Start a conversation with {assistant?.name}</span>
+            <span className="font-bold">{assistant?.greeting}</span>
           </div>
         )}
       </div>
@@ -236,14 +255,31 @@ export default function ChatModule() {
         <div className="max-w-7xl p-5 mx-auto px-4">
           <div className="relative w-full">
             <MessageCircleQuestion className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-            <Input
+            <textarea
+              rows={1}
               placeholder="Type a message"
-              className="h-12 !px-10"
+              className="flex w-full rounded-md border border-input bg-background py-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 h-12 px-10 resize-none"
               onChange={(e) => {
                 e.preventDefault();
                 setInput(e.target.value);
               }}
               value={input}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && event.shiftKey) {
+                  // Shift + Enter: Add a new line
+                  setInput((prevMessage) => prevMessage + "\n");
+                  event.preventDefault(); // Prevent form submission if applicable
+                } else if (event.key === "Enter" && !event.shiftKey) {
+                  // Just Enter: Send the message (common for chat apps)
+                  event.preventDefault();
+                  if (input.trim()) {
+                    // Only send if message is not empty
+                    console.log("Sending message:", input);
+                    setInput(""); // Clear the input after sending
+                    handleSubmit()
+                  }
+                }
+              }}
             />
             <SendHorizonal
               className="absolute right-3 top-3 h-5 w-5 text-gray-400 cursor-pointer"

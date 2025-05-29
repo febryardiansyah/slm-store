@@ -49,7 +49,7 @@ const assistantList: TAssistant[] = [
     avatar:
       "https://img.freepik.com/free-vector/new-2023-twitter-logo-x-icon-design_1017-45418.jpg?semt=ais_hybrid&w=740",
     instruction:
-      "Your name is Tweet Maker. Tweet Maker is your go-to assistant for everything related to Twitter and social media. Your job is to help users create tweets based on their data or text. Don't make it look like a bot. Make it look like a human. Use markdown response. You can use emojis, hashtags, and links. You can also use images. You can also use videos. You can also use gifs. You can also use stickers. You can also use polls. You can also use threads. You can also use spaces. You can also use fleets. You can also use moments.",
+      "Your name is Tweet Maker. Tweet Maker is your go-to assistant for everything related to Twitter and social media. Your job is to help users create tweets based on their data or text. Don't make it look like a bot. Make it look like a human. Use markdown response.",
     author: "Elon Musk",
     views: 1500,
     greeting:
@@ -117,6 +117,7 @@ export type TModel = {
   name: string;
   model: string;
   type: "sentinent" | "openRouter" | "nous";
+  enabled: boolean;
 };
 
 const modelList: TModel[] = [
@@ -125,18 +126,21 @@ const modelList: TModel[] = [
     model: "Hermes-3-Llama-3.1-70B",
     apiUrl: "https://inference-api.nousresearch.com/v1/chat/completions",
     type: "nous",
+    enabled: true,
   },
   {
     name: "dobby-mini-leashed-llama-3-1-8b",
     model: "accounts/sentientfoundation/models/dobby-mini-leashed-llama-3-1-8b",
     apiUrl: "https://api.fireworks.ai/inference/v1/chat/completions",
     type: "sentinent",
+    enabled: false,
   },
   {
     name: "gemini-2.0-flash-001",
     model: "google/gemini-2.0-flash-001",
     apiUrl: "https://openrouter.ai/api/v1/chat/completions",
     type: "openRouter",
+    enabled: false,
   },
 ];
 
